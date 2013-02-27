@@ -1,0 +1,9 @@
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+
+#/gun/particle gamma
+/gun/particle e3
+/gun/energy 512 keV
+/run/beamOn 1000000

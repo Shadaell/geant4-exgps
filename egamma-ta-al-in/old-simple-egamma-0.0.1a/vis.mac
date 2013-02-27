@@ -1,0 +1,32 @@
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+
+# Create a scene handler for a specific graphics system
+#/vis/open VRML1FILE
+# # motif widget with opengl:
+
+/vis/open HepRepFile
+
+/vis/drawVolume
+
+# show only e+ e-
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add e+
+#/vis/filtering/trajectories/particleFilter-0/add e-
+#/vis/filtering/trajectories/particleFilter-0/invert true
+#/vis/filtering/trajectories/particleFilter-0/verbose true
+#/vis/filtering/trajectories/particleFilter-0/active false
+
+# for drawing the tracks
+/vis/scene/add/trajectories
+
+# (if you prefer refreshing each event, comment out next line)
+/vis/scene/endOfEventAction accumulate
+
+#
+#/gun/particle gamma
+/gun/particle e-
+/gun/energy 44000 keV
+/run/beamOn 20
