@@ -37,7 +37,7 @@ DetectorConstruction::DetectorConstruction()
 
 DetectorConstruction::~DetectorConstruction() 
 {
-  delete messenger;
+  
 }
 
 /**
@@ -167,9 +167,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // тут будуть розташовані всі об'єкти:
   G4Box *world_box = new G4Box("WORLD_BOX",
 			       //3 параметри паралелепіпеда X,Y,Z
-			       660*cm,
-			       660*cm,
-			       660*cm);
+			       1660*cm,
+			       1660*cm,
+			       1660*cm);
 
   // заполним воздухом лабораторию:
   G4LogicalVolume *world_logical_volume =
