@@ -47,12 +47,25 @@ DetectorSD2::DetectorSD2(G4String name): G4VSensitiveDetector(name)
   d_energy_units=1;
   debug_output = false;
   temp_count = 0;
+  
+  d_deposited_count = true;
 }
 
 DetectorSD2::~DetectorSD2() 
 {
   named_vector_map_Ekin.clear();
   named_vector_map_Edep.clear();
+}
+
+void DetectorSD2::DisableDepositedEnergyCount()
+{
+  d_deposited_count = false;
+}
+
+
+void DetectorSD2::EnableDepositedEnergyCount()
+{
+  d_deposited_count = true;
 }
 
 void DetectorSD2::Initialize(G4HCofThisEvent*)
@@ -63,6 +76,7 @@ void DetectorSD2::Initialize(G4HCofThisEvent*)
 
 G4bool DetectorSD2::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
+  if(d_deposited_count) {
   // через детектор летит частица
   // добавляем энергию потерянную частицей
   // к счетчику энергии детектора
@@ -80,6 +94,7 @@ G4bool DetectorSD2::ProcessHits(G4Step* step, G4TouchableHistory*)
 	    <<" part. kinetic energy(kev):" << track->GetKineticEnergy()/keV
 	    <<"\n";
     }
+  } 
   return true;
 }
 
