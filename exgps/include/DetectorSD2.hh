@@ -32,6 +32,11 @@ public:
   DetectorSD2(G4String);
   ~DetectorSD2();
 
+  /** disable deposited energy when detector used as virtual counter.
+   * May speedup the simulation.*/
+  void DisableDepositedEnergyCount();
+  void EnableDepositedEnergyCount();
+
   void Initialize(G4HCofThisEvent*);
   G4bool ProcessHits(G4Step*, G4TouchableHistory*);
   void EndOfEvent(G4HCofThisEvent*);
@@ -100,7 +105,7 @@ private:
 		   std::vector<double> &vector,
 		   bool append = true ) const;
 private:
-  
+  bool d_deposited_count;
   unsigned  d_energy_units;
   
   std::map<G4String, std::vector <double> > named_vector_map_Ekin;
