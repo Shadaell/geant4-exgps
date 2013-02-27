@@ -167,9 +167,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // тут будуть розташовані всі об'єкти:
   G4Box *world_box = new G4Box("WORLD_BOX",
 			       //3 параметри паралелепіпеда X,Y,Z
-			       1660*cm,
-			       1660*cm,
-			       1660*cm);
+			       16.6*m,
+			       16.6*m,
+			       16.6*m);
 
   // заполним воздухом лабораторию:
   G4LogicalVolume *world_logical_volume =
@@ -186,26 +186,26 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
       make_box(world_logical_volume,
 	       "plita",
 	       concreteMaterial,
-	       G4ThreeVector(0,0, -6.7*m), 3 * m, 3* m, 20 * cm);
+	       G4ThreeVector(0,0, -6.7*m), 3 *m, 3 *m, 0.2 *m);
 
   g4solid_object<G4Box> *febox = 
       make_box(world_logical_volume,
 	       "febox",
 	       Fe_material,
-	       G4ThreeVector(0,0, -10.1*m), 2 * m, 2* m, 2 * m);
+	       G4ThreeVector(0,0, -10.1 *m), 2 *m, 2 *m, 2 *m);
   
 
   g4solid_object<G4Box> *polybox = 
       make_box(world_logical_volume,
 	       "polybox",
 	       Poly_material,
-	       G4ThreeVector(0,0, 0), 2 * m, 2* m, 2 * m);
+	       G4ThreeVector(0,0, -10.3 *m), 2 * m, 2* m, 2 * m);
 
   g4solid_object<G4Box> *airbox = 
       make_box(world_logical_volume,
 	       "airbox",
 	       Air,
-	       G4ThreeVector(0,0, 0), 170*cm, 170*cm, 170*m);
+	       G4ThreeVector(0,0, -10.4 *m), 1.7 *m, 1.7 *m, 1.7 *m);
   
   
   // --- ASSIGN RADIATION SENSITIVE DETECTORS ---
