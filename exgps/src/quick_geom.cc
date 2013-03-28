@@ -146,3 +146,63 @@ g4solid_object<G4Box> * make_box( G4LogicalVolume *WORLD_LOGICAL,
   korobka->set(pbox, logical, physical);
   return korobka;
 }
+
+void make_box_with_hole( G4LogicalVolume *WORLD_LOGICAL,
+			 const G4String name,
+			 G4Material *material,
+			 const G4ThreeVector placement,
+			 G4ThreeVector BoxDimensions,
+			 G4ThreeVector HoleDimensions,
+			 std::vector< g4solid_object<G4Box>* > *PVectorOfPointers,
+			 G4RotationMatrix *pRot )
+{
+#define BOXPART_CONSTRUCT(NAME__, SHIFT_VECTOR, WIDTH, HEIGHT, DEPTH)	\
+    make_box(WORLD_LOGICAL,						\
+	     (name + NAME__),						\
+	     (material),						\
+	     (SHIFT_VECTOR), (WIDTH), (HEIGHT), (DEPTH), pRot)		\
+
+#define PUSH_PART				\
+    if(PVectorOfPointers != NULL) {		\
+	PVectorOfPointers->push_back(part);	\
+    }
+    G4ThreeVector box = BoxDimensions;
+    G4ThreeVector hole = HoleDimensions;
+    float thickness = fabs(box.z() - hole.z())/2.0;
+
+    G4ThreeVector shift = G4ThreeVector(0, 0, -1*(hole.z() + box.z())/2.0);
+    G4ThreeVector place = placement + shift;
+
+    g4solid_object<G4Box> *part;
+    part = BOXPART_CONSTRUCT("bottom", place, box.x(), box.y(),  thickness);
+    PUSH_PART;
+	
+    place = placement - shift;
+    part = BOXPART_CONSTRUCT("top", place, box.x(), box.y(),  thickness);
+    PUSH_PART;
+
+    // /* X axis */
+    thickness = fabs(box.x() - hole.x())/2.0;
+    shift = G4ThreeVector(-1*(hole.x() + box.x())/2.0, 0, 0);
+    place = placement + shift;
+    part = BOXPART_CONSTRUCT("X_left", place, thickness, box.y(), hole.z());
+    PUSH_PART;
+	
+    place = placement - shift;
+    part = BOXPART_CONSTRUCT("X_right", place, thickness, box.y(), hole.z());
+    PUSH_PART;
+
+    // /* Y axis */
+    thickness = fabs(box.y() - hole.y())/2.0;
+    shift = G4ThreeVector(0, -1*(hole.y() + box.y())/2.0, 0);
+    place = placement + shift;
+    part = BOXPART_CONSTRUCT("Y_left", place, hole.x(), thickness, hole.z());
+    PUSH_PART;
+	
+    place = placement - shift;
+    part = BOXPART_CONSTRUCT("Y_right", place, hole.x(), thickness, hole.z());
+    PUSH_PART;
+
+#undef BOXPART_SHORTCUT
+#undef PUSH_PART
+}
