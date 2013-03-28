@@ -50,12 +50,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
    */
   std::vector<DetectorSD2*> vector_DetectorSD;
 
-  /** Vector of pointers to DetectorSD objects.
-      It will be filled on this->Construct() method call.
-      Address of this object may be passed to other places.
-   */
-  std::vector<DetectorSD2*> vector_DetectorSD_COUNTERS;
-
 
   /** 
       Read parameters values from a map<G4String, G4double>;

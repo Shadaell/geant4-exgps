@@ -38,8 +38,8 @@
 
 PrimaryGeneratorAction::PrimaryGeneratorAction()
 {
-  source_position = G4ThreeVector(0,0,0);
-  particle_momentum = G4ThreeVector(0,0,1);
+  source_position = G4ThreeVector(0,0, 8 * m);
+  particle_momentum = G4ThreeVector(0,0, -1.0);
   beam_diameter = 0.9*cm;
   real_electron_beam=true;
   // создаем источник частиц
